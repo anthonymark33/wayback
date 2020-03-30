@@ -16,6 +16,7 @@ public class ReverseRevisitResolver extends RevisitResolver {
 		
 		@Override
 		final void revisit(CDXLine line) {
+		    LOGGER.warning("ReverseRevisitTrack.revisit line: " + line);
 			if (revisitLines == null) {
 				revisitLines = new LinkedList<CDXLine>();
 			}
@@ -25,6 +26,7 @@ public class ReverseRevisitResolver extends RevisitResolver {
 		
 		@Override
 		final void original(CDXLine line) {
+		    LOGGER.warning("ReverseRevisitTrack.original line: " + line);
 			if (revisitLines != null) {
 				for (CDXLine revisitLine : revisitLines) {
 					fillRevisit(revisitLine, line);

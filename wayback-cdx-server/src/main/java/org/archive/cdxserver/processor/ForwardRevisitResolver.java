@@ -13,6 +13,7 @@ public class ForwardRevisitResolver extends RevisitResolver {
 
 		@Override
 		final void revisit(CDXLine line) {
+		    LOGGER.warning("ForwardRevisitTrack.revisit line: " + line);
 			if (origLine != null) {
 				fillRevisit(line, origLine);
 			} else {
@@ -22,6 +23,7 @@ public class ForwardRevisitResolver extends RevisitResolver {
 
 		@Override
 		final void original(CDXLine line) {
+		    LOGGER.warning("ForwardRevisitTrack.original line: " + line);
 			if (origLine == null) {
 				origLine = line;
 			}

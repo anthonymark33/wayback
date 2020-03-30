@@ -3,29 +3,37 @@ package org.archive.cdxserver.processor;
 import org.archive.cdxserver.format.CDXFormat;
 import org.archive.format.cdx.CDXLine;
 
+import java.util.logging.Logger;
+
 public abstract class RevisitResolver extends DupeCountProcessor {
 
 	public final static String origfilename = "orig.filename";
 	public final static String origoffset = "orig.offset";
 	public final static String origlength = "orig.length";
 
-	public RevisitResolver(BaseProcessor output, boolean showDupeCount) {
+        public final static Logger LOGGER = Logger.getLogger(RevisitResolver.class.getName());
+
+        public RevisitResolver(BaseProcessor output, boolean showDupeCount) {
 		super(output, showDupeCount);
 	}
 	
 	protected static void fillBlankOrig(CDXLine line) {
-		line.setField(origlength, CDXLine.EMPTY_VALUE);
-		line.setField(origoffset, CDXLine.EMPTY_VALUE);
-		line.setField(origfilename, CDXLine.EMPTY_VALUE);
+	    LOGGER.warning("fillBlankOrig 'line' before processing: "+line);
+	    line.setField(origlength, CDXLine.EMPTY_VALUE);
+	    line.setField(origoffset, CDXLine.EMPTY_VALUE);
+	    line.setField(origfilename, CDXLine.EMPTY_VALUE);
+	    LOGGER.warning("fillBlankOrig 'line' after processing: "+line);
 	}
 
 	protected static void fillRevisit(CDXLine line, CDXLine origLine) {
-		line.setMimeType(origLine.getMimeType());
-		line.setStatusCode(origLine.getStatusCode());
-
-		line.setField(origlength, origLine.getLength());
-		line.setField(origoffset, origLine.getOffset());
-		line.setField(origfilename, origLine.getFilename());
+	    LOGGER.warning("fillRevisit 'line' before processing: "+line+" origLine: "+origLine);
+	    line.setMimeType(origLine.getMimeType());
+	    line.setStatusCode(origLine.getStatusCode());
+	    
+	    line.setField(origlength, origLine.getLength());
+	    line.setField(origoffset, origLine.getOffset());
+	    line.setField(origfilename, origLine.getFilename());
+	    LOGGER.warning("fillRevisit 'line' after processing: "+line+" origLine: "+origLine);
 	}
     
 	protected static boolean isRevisit(CDXLine line) {
